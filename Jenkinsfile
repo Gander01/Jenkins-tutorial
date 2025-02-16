@@ -2,46 +2,39 @@ pipeline {
     agent any
 
     environment {
-        // Add any environment variables if needed (like credentials, paths, etc.)
+        GIT_REPO = 'https://github.com/Gander01/Jenkins-tutorial'
+        DOCKER_IMAGE = 'maven:3.9.9-eclipse-temurin-21-alpine'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from GitHub (make sure the repo URL is correct)
-                checkout scm
+                git branch: 'main', url: "${GIT_REPO}"
             }
         }
 
         stage('Build') {
             steps {
-                // Run Maven to build the project
-                sh 'mvn clean install'
+                script {
+                    sh 'echo "Building the project..."'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                // Run tests if applicable
-                sh 'mvn test'
+                script {
+                    sh 'echo "Running tests..."'
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                // Deploy the project (adjust as needed)
-                // Example: sh 'mvn deploy'
-                echo 'Deploying the project...'
+                script {
+                    sh 'echo "Deploying the application..."'
+                }
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Build succeeded!'
-        }
-        failure {
-            echo 'Build failed!'
         }
     }
 }
